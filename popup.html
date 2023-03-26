@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="header.css">
+        <link rel="stylesheet" href="popup.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css">
+
+    </head>
+    <body>
+        <header>
+            <div class="schoolSelector">
+                <img id="arrow" src="image/arrow-black.png">
+                <p>스컬걸즈모바일마이스터고등학교</p>
+            </div>
+            <div class="colorSelector">
+                <!-- <img type="color" src="image/palette-black.png"> -->
+                <input type='color' value='#eeeeee'>
+            </div>
+        </header>
+
+
+        <aside class="clock">
+
+            <span class="weather">| Loading...</span>
+            <div class="clockTime">
+
+                <span class="watch">10:02</span>
+                <div class="watchSide">
+                    <span class="ampm">오전</span>
+                    <span class="seconds">05</span>
+                </div>
+            </div>
+                <span class="dateToday">2005년 10월 2일 월요일</span>
+                
+        </aside>
+        <nav class="timetableNav">
+            <div class="timetableSlot select" id="morning"><p>아침</p>
+                 <div class="overlay">
+                <div class="overlayLine"></div>
+                 </div></div> 
+            <div class="timetableSlot" id="afternoon"><p>점심</p>
+                 <div class="overlay">
+                    <div class="overlayLine"></div>
+                </div></div>
+            <div class="timetableSlot" id="evening"><p>저녁</p>
+                 <div class="overlay">
+                    <div class="overlayLine"></div>
+                </div></div>
+        </nav>
+
+        <main>
+            <div class="tableDate">
+                <p>&nbsp;&lt;&nbsp;&nbsp;</p>
+                    <input id="selectedDate" type="date" max="2040-01-01" min="2020-01-01" value="2023-03-24">
+                <p>&nbsp;&nbsp;&gt;&nbsp;</p>
+            </div>
+
+            <article class="timetable">
+                <div class="table timetableBreakfast view" id="breakfast">
+                <p>백미밥</p>
+                <p>김치콩나물국</p>
+                <p>감자채피망볶음</p>
+                <p>찹스테이크채소볶음</p>
+                <p>깍두기</p>
+                <p>거꾸로요구르트</p>
+                <p>머핀</p></div>
+                <div class="table timetableLunch"id="lunch">
+                <p>백asdgasdg미밥</p>
+                <p>asdf</p>
+                <p>감자채asdasdfgs피망볶음</p>
+                <p>찹스테이크asdfa채소볶음</p>
+                <p>dsfa</p
+                <p>sdfsdfs</p>
+                <p>머핀</p></div></div>
+                <div class="table timetableDinner"id="">
+                    
+                <p>yuiyuiyui</p>
+                <p>hjkhjkh</p>
+                <p>감자채피망볶음</p>
+                <p>깍두기</p>
+                <p>거꾸로요구르트</p>
+                <p>머핀</p></div>
+                </div>
+            </article>
+        </main>
+        <script src="C:\Users\YKn\Documents\API.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>

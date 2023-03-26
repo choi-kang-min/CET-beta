@@ -1,0 +1,14 @@
+
+:root {
+    --main-color: #c4c4c4;
+    --slot-color: #e9e9e9;
+    --background-light: #ffffff;
+    --background-dark: #123213;
+    --text-lightest: #888888;
+    --text-light: #5e5e5e;
+    --text-medium: #363636;
+    --text-dark: #414141;
+    --text-white: #ffffff;
+
+    --move-2 : 0.1s ease;
+  }

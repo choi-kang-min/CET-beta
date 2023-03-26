@@ -1,0 +1,224 @@
+@import "root.css";
+
+/*기본 설정*/
+* {
+  padding: 0;
+  margin: 0;
+  font-family: 'SUIT Variable', sans-serif;
+}
+
+body {
+  width: 350px;
+  height: 500px;
+  box-shadow: 1px 1px 1px 1px;
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+}
+
+/*시계*/
+.clock {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 0 9%;
+  margin: 0;
+
+}
+
+.weather {
+  font-size: 14px;
+  color: var(--text-lightest);
+  margin: 12px 0 0 0;
+}
+
+.clockTime {
+  margin: 5px 0 3px 0;
+  display: flex;
+}
+
+.clockTime .watch {
+  font-size: 51px;
+  color: var(--main-color);
+  line-height: 100%;
+  font-weight: 500;
+}
+.clockTime .watch.bordering {
+  -webkit-text-stroke: 0.7px #5b5b5b;
+  font-weight: 600;
+}
+
+.clockTime .watchSide {
+  display: flex;
+  flex-direction: column;
+}
+
+.clockTime .ampm {
+  padding: 7px 0 0 5px;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.clockTime .seconds {
+  padding: 5px 0 0 3px;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.dateToday {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+/*아침점심저녁*/
+
+
+.timetableNav{
+  width: 80%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background-color: var(--slot-color);
+  color: var(--text-dark);
+  padding: 0 10% 0 10%;
+}
+
+.timetableSlot{
+  position: relative;
+  transition: var(--move-2);
+  display: flex;
+  color: var(--text-dark);
+  width: calc(100%/3);
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 0px solid var(--main-color);
+  cursor: pointer;
+  box-sizing: content-box;
+  overflow: hidden;
+}
+
+.timetableSlot:hover{
+  transition: var(--move-2);
+  box-sizing: border-box;
+  border-bottom: 4px solid var(--main-color) ;
+  background-color: #ffffff;
+}
+
+.timetableSlot.select {
+  box-sizing: content-box;
+  transition: var(--move-2);
+  border-right: 2.5px solid var(--main-color);
+  border-left: 2.5px solid var(--main-color);
+}
+.timetableSlot.select:hover {
+  box-sizing: content-box;
+  border-bottom: 0px solid var(--main-color);
+  border-right: 7px solid var(--main-color);
+  border-left: 7px solid var(--main-color);
+  background-color: #ffffff;
+  animation: none;
+} 
+/*네비게이션바 애니메이션*/
+
+.overlay {
+  display: hidden;
+  position: absolute; /* 절대 위치 설정 */
+  top: 0; /* 상단에 위치 */
+  left: 0; /* 좌측에 위치 */
+  width: 100%; /* 전체 너비 */
+  height: 100%; /* 전체 높이 */
+  transform: translateX(-100%) skew(-45deg); /* 초기 위치 (왼쪽으로 이동) */
+  animation: move 4s linear infinite; /* 애니메이션 적용 */
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(-100%) skew(-45deg); /* 시작 위치 (왼쪽으로 이동) */
+  }
+  20% {
+    transform: translateX(140%) skew(-45deg);
+  }
+  20.00001% {
+    transform: translateX(-100%) skew(-45deg);
+  }
+  40% {
+    transform: translateX(140%) skew(-45deg);
+  }
+  100% {
+    transform: translateX(140%) skew(-45deg);
+  }
+}
+
+.overlayLine {
+  width: 70%;
+  height: 120px; background-color: #ffffff;
+  opacity: 0.3; /* 투명도 설정 */
+}
+  
+
+
+
+/*급식 나오는 거 날짜 땣ㅇ 엄냘;ㅣㅍ*/
+main {
+  width: 82%;
+  height: 260px;
+  margin:0 9% 5% 9%;
+}
+.tableDate {
+  text-align: center;    
+  justify-content: center;
+  margin: 15px 0 15px 0;
+  font-size: 16px;
+  display: flex;
+}
+
+.tableDate p:hover {
+  cursor: pointer;
+}
+
+/*급식표*/
+.timetable {
+  height: 200px;
+  position: relative;
+  margin: 0 20px 0 20px;
+}
+
+
+.table {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  transition: var(--move-2);
+  opacity: 0;
+}
+
+.table.view {
+  display: flex;
+  transition: var(--move-2);
+  opacity: 1;
+}
+.timetableBreakfast {
+  align-items: left;
+  text-align: left;
+}
+.timetableLunch {
+  align-items: center;
+  text-align: center;
+}
+.timetableDinner {
+  align-items: right;
+  text-align: right;
+}
+
+
+
+
+.timetable p{
+  font-size: 14px;
+}
+
