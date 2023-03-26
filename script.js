@@ -20,23 +20,28 @@ const lunchButton = document.getElementById("afternoon");
 const dinnerButton = document.getElementById("evening");
 
 //timetable
-const selectedDate = document.getElementById("selectedDate");
+let selectedDate = document.getElementById("selectedDate");
 
 const timetableBreakfast = document.querySelector(".timetableBreakfast");
 const timetableLunch = document.querySelector(".timetableLunch");
 const timetableDinner = document.querySelector(".timetableDinner");
 
 
-// ---------------- 반복되는 코드
 
-function updateTime(){
-  setInterval(getTime, 500);
-}
-updateTime();
+
+
 
 // ---------------- 시계
 
-let time,year,month,date,weekday,hour,minutes,seconds,judgeAmpm,week;
+let year,month,date,weekday,hour,minutes,seconds,judgeAmpm,week;
+
+function getTime(){
+  currentTime(true);
+  watch.innerHTML = `${hour}:${minutes}`;
+  ampm.innerHTML = judgeAmpm;
+  second.innerHTML = seconds;
+  dateToday.innerHTML = `${year}년 ${month}월 ${date}일 ${week[weekday]}요일`;
+}
 
 function currentTime(clockSet) {
   time = new Date();
@@ -52,41 +57,27 @@ function currentTime(clockSet) {
   if (minutes < 10) {
     minutes = "0" + minutes;
   }
-  
+
   if(clockSet) {
     if(hour > 12){
       hour = hour - 12;
       judgeAmpm = "오후";
     } else judgeAmpm = "오전";
+  } else {
+    const yearr = time.getFullYear();
+    const monthh = month < 10 ? "0" + month : month;
+    const datee = date < 10 ? "0" + date : date;
+    console.log(yearr + "-" + monthh + "-" + datee);
+    return yearr + "-" + monthh + "-" + datee;
   }
 }
-function getTime(){
-    //setting
-    currentTime(true);
-    // print
-    watch.innerHTML = `${hour}:${minutes}`;
-    ampm.innerHTML = judgeAmpm;
-    second.innerHTML = seconds;
-    dateToday.innerHTML = `${year}년 ${month}월 ${date}일 ${week[weekday]}요일`;
-}
+
 function setSelectedDate() {
   let date1, month1;
   date1 = date < 10 ? "0" + date : date;
   month1 = month < 10 ? "0" + month : month;
   return year + month1 + date1;
 }
-
-// ---------------- 초기 세팅
-let start = true;
-if(start) {
-  getWeather();
-  getTime();
-  start = false;
-  console.log(selectedDate);
-  console.log(selectedDate);
-
-}
-
 
 // ---------------- Local Storage에서의 초기 세팅
 
@@ -119,11 +110,13 @@ function setFontColor(hex) {
     header.style.color = "#ffffff";
     arrow.src="image/arrow-white.png";
     watch.classList.remove("bordering");
+    selectedDate.style.setProperty('border-color', 'var(--main-color)');
   } else { // 테마가 밝으면
     header.style.color = "#000000";
     arrow.src="image/arrow-black.png";
     if(judgeFontColor > 230 ) watch.classList.add("bordering");
     else watch.classList.remove("bordering");
+    selectedDate.style.borderColor = "#777777";
   }
 }
 //  rgb 명도 추출(객체.style 형식으로 색깔을 추출할 때는 rgb(r, g, b) 형식으로 출력됨)
@@ -157,7 +150,7 @@ function getWeather() {
 
 // ---------------- timetableSlot(버튼) 설정
 
-breakfastButton.addEventListener('click', (e) => {
+breakfastButton.addEventListener('click', () => {
 
   afternoon.classList.remove("select");
   evening.classList.remove("select");
@@ -169,7 +162,7 @@ breakfastButton.addEventListener('click', (e) => {
 
 
 });
-lunchButton.addEventListener('click', (e) => {
+lunchButton.addEventListener('click', () => {
   morning.classList.remove("select");
   evening.classList.remove("select");
   afternoon.classList.add("select");
@@ -179,7 +172,7 @@ lunchButton.addEventListener('click', (e) => {
   timetableLunch.classList.add("view");
 
 });
-dinnerButton.addEventListener('click', (e) => {
+dinnerButton.addEventListener('click', () => {
   morning.classList.remove("select");
   afternoon.classList.remove("select");
   evening.classList.add("select");
@@ -198,55 +191,107 @@ dinnerButton.addEventListener('click', (e) => {
 
 // ---------------- 급식 API
 
-  
-
-  const office = window.localStorage.getItem("office");
-  const school = window.localStorage.getItem("school");
-  const MP_API_KEY = window.localStorage.getItem("MP_API_KEY");
-  let getBreakfast, getLunch, getDinner;
-function getMealApi(day) {
-  return fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=${MP_API_KEY}&Type=json&pIndex=1&pSize=20&ATPT_OFCDC_SC_CODE=${office}&SD_SCHUL_CODE=${school}&MLSV_YMD=${day}`)
-            .then((response) => response.json())
-            .then(data => {
-
-                getBreakfast = data.mealServiceDietInfo[1].row[0] === (null || undefined) ? "급식이 없소" : data.mealServiceDietInfo[1].row[0].DDISH_NM;  
-                getLunch = data.mealServiceDietInfo[1].row[1] === (null || undefined) ? "급식이 없소" : data.mealServiceDietInfo[1].row[1].DDISH_NM;  
-                getDinner = data.mealServiceDietInfo[1].row[2] === (null || undefined) ? "급식이 없소" : data.mealServiceDietInfo[1].row[2].DDISH_NM;  
-                
-              })
-            .catch(error => {
-              console.error('Error:', error);
-            });
-}
-
-
-selectedDate.addEventListener('change', () => {
-  const updateDate = selectedDate.value;
-  setMeal(updateDate);
-
+selectedDate.addEventListener('change', () => { // 업데이트
+  setMeal(selectedDate.value);
 });
 
+
 function setMeal(input) {
-  const Date1 = input.replace(/[-/s]/g, "");
-  console.log(Date1);
-  const qwer = getMealApi(Date1);
-  console.log(qwer);
-  localStorage.setItem('asdf', qwer);
-  console.log(localStorage.getItem('qwer'));
-
-  
+  const Date1 = input.replace(/[-/s]/g, ""); // API 날짜를 불러오기 위한 컨버팅
+  getMealApi(Date1);
 }      
+  
+
+const office = window.localStorage.getItem("office");
+const school = window.localStorage.getItem("school");
+const MP_API_KEY = window.localStorage.getItem("MP_API_KEY");
+let getBreakfast, getLunch, getDinner;
+function getMealApi(day) {
+  fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=${MP_API_KEY}&Type=json&pIndex=1&pSize=20&ATPT_OFCDC_SC_CODE=${office}&SD_SCHUL_CODE=${school}&MLSV_YMD=${day}`)
+    .then((response) => response.json())
+    .then(data => {
+      console.log(data);
+      if(data.mealServiceDietInfo) {
+        getBreakfast = data.mealServiceDietInfo[1].row[0] === (null || undefined) ? null : foodFilter(data.mealServiceDietInfo[1].row[0].DDISH_NM);  
+        getLunch = data.mealServiceDietInfo[1].row[1] === (null || undefined) ? null : foodFilter(data.mealServiceDietInfo[1].row[1].DDISH_NM);  
+        getDinner = data.mealServiceDietInfo[1].row[2] === (null || undefined) ? null : foodFilter(data.mealServiceDietInfo[1].row[2].DDISH_NM); 
+      } else {
+        getBreakfast = null;
+        getLunch = null;
+        getDinner = null;
+      }
+        
+        
+
+        timetableBreakfast.querySelectorAll('p').forEach(p => p.remove());
+        timetableLunch.querySelectorAll('p').forEach(p => p.remove());
+        timetableDinner.querySelectorAll('p').forEach(p => p.remove());
+
+        let timetable = {timetableBreakfast, timetableLunch, timetableDinner};
+
+        if(getBreakfast) {
+          getBreakfast.forEach(tag => {
+            const pElement = document.createElement('p');
+            pElement.textContent = tag;
+            timetableBreakfast.appendChild(pElement);
+          })
+        } else gettingError(timetableBreakfast);
+
+        if(getLunch) {
+          getLunch.forEach(tag => {
+            const pElement = document.createElement('p');
+            pElement.textContent = tag;
+            timetableLunch.appendChild(pElement);
+        })
+        } else gettingError(timetableLunch);
+
+        if(getDinner) {
+          getDinner.forEach(tag => {
+            const pElement = document.createElement('p');
+            pElement.textContent = tag;
+            timetableDinner.appendChild(pElement);
+          })
+        } else gettingError(timetableDinner);
+
+        function gettingError(a) {
+          const pElement = document.createElement('p');
+          pElement.textContent = "급식 없다 굶어라";
+          a.appendChild(pElement);
+          
+        }
 
 
-function foodFilter (food) {
+      })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+function foodFilter (food) { // 급식 API에서 받은 정보를 컨버팅해서 배열로 반환
   console.log(food);
-  food = food.replace(/[0-9]/g, "");
-  food = food.replace(/\(/g, "");
-  food = food.replace(/\)/g, "");
-  food = food.replace(/\./g, "");
-  food = food.replace(/\*/g, ""); 
-  a = food1.split('<br/>').filter((value) => {
+  food = food.replace(/\(([\uAC00-\uD7AF.*]+)\)/g, ""); // \uAC00-\uD7AF -> 유니코드 상의 한글 범위
+  food = food.replace(/[0-9 \. \* \( \)]/g, "");
+  a = food.split('<br/>').filter((value) => {
       return value !== '';
   });
   return a;
 }
+
+
+// ---------------- 초기 세팅(TDZ 땨문에 맨 아래에다가 넣어둠)
+
+let start = true;
+if(start) {
+  getWeather();
+  getTime();
+  selectedDate.value = currentTime(false);
+  setMeal(selectedDate.value);
+  start = false;
+
+}
+// ---------------- 반복되는 코드
+
+function updateTime(){
+  setInterval(getTime, 500);
+}
+updateTime();

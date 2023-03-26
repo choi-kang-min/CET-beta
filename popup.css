@@ -164,23 +164,40 @@ body {
 main {
   width: 82%;
   height: 260px;
-  margin:0 9% 5% 9%;
+  margin:0 9% 0% 9%;
 }
-.tableDate {
-  text-align: center;    
+.tableDate { 
+  align-items: center;
   justify-content: center;
-  margin: 15px 0 15px 0;
+  margin: 7px 0 10px 0;
   font-size: 16px;
   display: flex;
 }
 
+
+#selectedDate {
+  font-size: 15px;
+  padding: 5px 9px 5px 9px;
+  border: 0px border var(--main-color);
+  border-radius: 5px;
+  transition: var(--move-2);
+}
+
+#selectedDate:hover {
+  border: 3px solid var(--main-color);
+  transition: var(--move-2);
+}
+
+
 .tableDate p:hover {
   cursor: pointer;
+  color: var(--main-color);
+  font-weight: 700;
 }
 
 /*급식표*/
 .timetable {
-  height: 200px;
+  height: 210px;
   position: relative;
   margin: 0 20px 0 20px;
 }
@@ -190,7 +207,7 @@ main {
   position: absolute;
   height: 100%;
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-around;
   display: flex;
   flex-direction: column;
   transition: var(--move-2);
