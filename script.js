@@ -1,4 +1,4 @@
-// ---------------- html 연동
+
 
 //header
 const header = document.querySelector("header");
@@ -63,20 +63,15 @@ function currentTime(clockSet) {
       hour = hour - 12;
       judgeAmpm = "오후";
     } else judgeAmpm = "오전";
-  } else {
-    const yearr = time.getFullYear();
-    const monthh = month < 10 ? "0" + month : month;
-    const datee = date < 10 ? "0" + date : date;
-    console.log(yearr + "-" + monthh + "-" + datee);
-    return yearr + "-" + monthh + "-" + datee;
   }
 }
 
-function setSelectedDate() {
-  let date1, month1;
-  date1 = date < 10 ? "0" + date : date;
-  month1 = month < 10 ? "0" + month : month;
-  return year + month1 + date1;
+function setSelectedDate(a) {
+  const yearr = time.getFullYear();
+  const monthh = month < 10 ? "0" + month : month;
+  const datee = date < 10 ? "0" + date : date;
+  console.log(yearr + "-" + monthh + "-" + datee);
+  return yearr + "-" + monthh + "-" + datee;
 }
 
 // ---------------- Local Storage에서의 초기 세팅
@@ -284,7 +279,7 @@ let start = true;
 if(start) {
   getWeather();
   getTime();
-  selectedDate.value = currentTime(false);
+  selectedDate.value = setSelectedDate(false);
   setMeal(selectedDate.value);
   start = false;
 
