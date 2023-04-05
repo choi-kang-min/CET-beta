@@ -4,21 +4,13 @@
     "description": "복습 겸 그냥 장난으로 확장프로그램 만들기 하하하하히",
     "version": "1.0",
     "background": {
-      "service_worker": "script.js"
+      "service_worker": "popup.js"
     },
     "action": {
         "default_popup": "popup.html",
         "default_icon": "hello_extensions.png" 
         
     },
-    "content_scripts": [ 
-        {
-          "js": ["script.js"],
-          "matches": [
-            "https://gcms.msg-team.com/*"
-          ]
-        }
-      ],
     "permissions": ["activeTab", "scripting", "geolocation"],
       "commands": {
         "_execute_action": {

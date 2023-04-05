@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="header.css">
-        <link rel="stylesheet" href="popup.css">
+        <link rel="stylesheet" href="welcome.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css">
 
     </head>
@@ -11,13 +11,48 @@
         <header>
             <div class="schoolSelector">
                 <img id="arrow" src="image/arrow-black.png">
-                <p>스컬걸즈모바일마이스터고등학교</p>
+                <p></p>
             </div>
             <div class="colorSelector">
                 <input type='color' valugit e='#eeeeee'>
             </div>
         </header>
-        <script src="header.js"></script>
+        <section>
+            <form>
+                <span>
+                    API key
+                </span>
+                <input type="text" placeholder="여기에 본인의 API를 입력해주세요!">
+                <span>
+                    시도교육청코드
+                </span>
+                <select id="options">
+                    <option value="" disabled selected>교육청을 선택해주세요!</option>
+                    <option value="item1">서울특별시교육청(B10)</option>
+                    <option value="item1">부산광역시교육청(C10)</option>
+                    <option value="item1">대구광역시교육청(D10)</option>
+                    <option value="item1">인천광역시교육청(E10)</option>
+                    <option value="item1">광주광역시교육청(F10)</option>
+                    <option value="item1">대전광역시교육청(G10)</option>
+                    <option value="item1">울산광역시교육청(H10)</option>
+                    <option value="item1">세종특별자치시교육청(I10)</option>
+                    <option value="item1">경기도교육청(J10)</option>
+                    <option value="item1">강원도교육청(K10)</option>
+                    <option value="item1">충청북도교육청(M10)</option>
+                    <option value="item1">충청남도교육청(N10)</option>
+                    <option value="item1">전라북도교육청(P10)</option>
+                    <option value="item1">전라남도교육청(Q10)</option>
+                    <option value="item1">경상북도교육청(R10)</option>
+                    <option value="item1">경상남도교육청(S10)</option>
+                    <option value="item1">제주특별자치도교육청(T10)</option>
+                    <option value="item1">재외학국학교교육청(V10)</option>
+                </select>
+
+                <input type="submit" value="next">
+            </form>
+        </section>
+
+        <script src="welcome.js"></script>
 
     </body>
 </html>

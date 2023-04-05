@@ -1,0 +1,17 @@
+@import "root.css";
+
+/*기본 설정*/
+* {
+  padding: 0;
+  margin: 0;
+  font-family: 'SUIT Variable', sans-serif;
+}
+
+body {
+    width: 350px;
+    height: 500px;
+    box-shadow: 1px 1px 1px 1px;
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+  }

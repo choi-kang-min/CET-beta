@@ -31,11 +31,13 @@ const timetableDinner = document.querySelector(".timetableDinner");
 
 
 
+
+
 // ---------------- 시계
 
 let year,month,date,weekday,hour,minutes,seconds,judgeAmpm,week;
 
-function getTime(){
+function getTime(){ // view 업데이트 용
   currentTime(true);
   watch.innerHTML = `${hour}:${minutes}`;
   ampm.innerHTML = judgeAmpm;
@@ -104,7 +106,6 @@ function setFontColor(hex) {
   if(judgeFontColor <= 128) { // 테마가 어두우면
     header.style.color = "#ffffff";
     arrow.src="image/arrow-white.png";
-    watch.classList.remove("bordering");
     selectedDate.style.setProperty('border-color', 'var(--main-color)');
   } else { // 테마가 밝으면
     header.style.color = "#000000";
@@ -119,9 +120,10 @@ function setFontColor(hex) {
 // 안에 있는 것들 중 숫자만 추출해고 map(Number)라는 코드로 숫자를 이어서 nums에다가 넣는다.
 
 
+// 날씨 API
 
 let apiTemp, apiWeather;
-// 날씨 API
+
 function getWeather() {
   navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
   function onGeoOk(position) {
@@ -141,40 +143,56 @@ function getWeather() {
   }
 }
 
+// nav 선택 시
 
+document.addEventListener('keydown', (event) => {
+  setSelectNav(event.key);
+});
 
-// ---------------- timetableSlot(버튼) 설정
+function setSelectNav(input) {
+  if(input) {
+    if(input === "1") {
+      afternoon.classList.remove("select");
+      evening.classList.remove("select");
+      morning.classList.add("select");
+    
+      timetableLunch.classList.remove("view");
+      timetableDinner.classList.remove("view");
+      timetableBreakfast.classList.add("view");
+
+    }
+    else if(input === "2") {
+      morning.classList.remove("select");
+      evening.classList.remove("select");
+      afternoon.classList.add("select");
+    
+      timetableBreakfast.classList.remove("view");
+      timetableDinner.classList.remove("view");
+      timetableLunch.classList.add("view");
+
+    } else if(input === "3") {
+      morning.classList.remove("select");
+      afternoon.classList.remove("select");
+      evening.classList.add("select");
+    
+      timetableBreakfast.classList.remove("view");
+      timetableLunch.classList.remove("view");
+      timetableDinner.classList.add("view");
+
+    }
+  }
+}
+
+// 키보드로도 작용할 수 있게 만듦
 
 breakfastButton.addEventListener('click', () => {
-
-  afternoon.classList.remove("select");
-  evening.classList.remove("select");
-  morning.classList.add("select");
-
-  timetableLunch.classList.remove("view");
-  timetableDinner.classList.remove("view");
-  timetableBreakfast.classList.add("view");
-
-
+  setSelectNav("1");
 });
 lunchButton.addEventListener('click', () => {
-  morning.classList.remove("select");
-  evening.classList.remove("select");
-  afternoon.classList.add("select");
-
-  timetableBreakfast.classList.remove("view");
-  timetableDinner.classList.remove("view");
-  timetableLunch.classList.add("view");
-
+  setSelectNav("2");
 });
 dinnerButton.addEventListener('click', () => {
-  morning.classList.remove("select");
-  afternoon.classList.remove("select");
-  evening.classList.add("select");
-
-  timetableBreakfast.classList.remove("view");
-  timetableLunch.classList.remove("view");
-  timetableDinner.classList.add("view");
+  setSelectNav("3");
 });
 // 함수로 묶어서 쓸려했는데 제대로 안 누르면 아무것도 안 눌리는 상태가 되는 버그생김 ^^7
 // 원인은 e.target인 듯(반응이 바로바로 안 되어 일일이 코드를 부여할 수밖에 없다. )ㄴ
@@ -190,12 +208,10 @@ selectedDate.addEventListener('change', () => { // 업데이트
   setMeal(selectedDate.value);
 });
 
-
 function setMeal(input) {
   const Date1 = input.replace(/[-/s]/g, ""); // API 날짜를 불러오기 위한 컨버팅
   getMealApi(Date1);
 }      
-  
 
 const office = window.localStorage.getItem("office");
 const school = window.localStorage.getItem("school");
@@ -215,14 +231,9 @@ function getMealApi(day) {
         getLunch = null;
         getDinner = null;
       }
-        
-        
-
-        timetableBreakfast.querySelectorAll('p').forEach(p => p.remove());
+        timetableBreakfast.querySelectorAll('p').forEach(p => p.remove()); // 초기화
         timetableLunch.querySelectorAll('p').forEach(p => p.remove());
         timetableDinner.querySelectorAll('p').forEach(p => p.remove());
-
-        let timetable = {timetableBreakfast, timetableLunch, timetableDinner};
 
         if(getBreakfast) {
           getBreakfast.forEach(tag => {
@@ -248,6 +259,8 @@ function getMealApi(day) {
           })
         } else gettingError(timetableDinner);
 
+        /// 급식이 없을 때
+
         function gettingError(a) {
           const pElement = document.createElement('p');
           pElement.textContent = "급식 없다 굶어라";
@@ -271,7 +284,6 @@ function foodFilter (food) { // 급식 API에서 받은 정보를 컨버팅해�
   });
   return a;
 }
-
 
 // ---------------- 초기 세팅(TDZ 땨문에 맨 아래에다가 넣어둠)
 

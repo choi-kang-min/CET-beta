@@ -3,6 +3,8 @@ const header = document.querySelector("header");
 const colorPalette = header.querySelector("input");
 const arrow = document.getElementById("arrow");
 
+
+
 if(window.localStorage.getItem('headerColor')) {
     document.documentElement.style.setProperty('--main-color', window.localStorage.getItem('headerColor'));
     setFontColor(window.localStorage.getItem('headerColor'));
